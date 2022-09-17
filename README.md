@@ -30,6 +30,30 @@ Good luck with your development!
 
 Run the following command and answer the prompts: `python -m create_unity_package`
 
+In your current working directory it will create a new package directory with the name of your package and the following structure.
+
+```
+<root>
+  ├── package.json
+  ├── README.md
+  ├── CHANGELOG.md
+  ├── LICENSE.md
+  ├── Third Party Notices.md
+  ├── Editor
+  │   ├── [company-name].[package-name].Editor.asmdef
+  ├── Runtime
+  │   ├── [company-name].[package-name].asmdef
+  ├── Tests
+  │   ├── Editor
+  │   │   ├── [company-name].[package-name].Editor.Tests.asmdef
+  │   └── Runtime
+  │        ├── [company-name].[package-name].Tests.asmdef
+  ├── Samples~
+  │        └── [empty]
+  └── Documentation~
+       └── [package-name].md
+```
+
 ### How to import and edit package in Unity
 
 Unity has detailed instructions for developing a local package.
