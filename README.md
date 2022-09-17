@@ -1,5 +1,11 @@
 # Create Unity Package
 
+<p align="center">
+  <img src="https://img.shields.io/pypi/dm/create-unity-package">
+  <img src="https://img.shields.io/pypi/l/create-unity-package">
+  <img src="https://img.shields.io/pypi/v/create-unity-package">
+</p>
+
 This is a simple command line tool that automates the creation of
 Unity packages. It creates the boilerplate package structure and
 inserts user-specific information. This package is inspired by
@@ -16,8 +22,9 @@ Good luck with your development!
 
 ### How to install
 
-Option #1: Install from Pip: `pip install create_unity_package`
-Option #2: Install from GitHub: `pip install git+https://github.com/ShiJbey/create_unity_package.git`
+**Option #1**: Install from Pip: `pip install create_unity_package`
+
+**Option #2**: Install from GitHub: `pip install git+https://github.com/ShiJbey/create_unity_package.git`
 
 ### How to create a new Unity Package
 
