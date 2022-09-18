@@ -30,6 +30,9 @@ Good luck with your development!
 
 ### How to install
 
+This tool is Python-based. So, you will need to install Python 3 if you
+don't already have it installed.
+
 **Option #1**: Install from Pip: `pip install create_unity_package`
 
 **Option #2**: Install from GitHub: `pip install git+https://github.com/ShiJbey/create_unity_package.git`
