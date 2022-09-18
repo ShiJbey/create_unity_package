@@ -1,4 +1,11 @@
-# Create Unity Package
+<h1 align="center">
+  <img
+    width="64"
+    height="64"
+    src="https://user-images.githubusercontent.com/11076525/190913978-f17fed38-e1d1-4a3c-9547-9d685b9e4a13.png"
+  >
+  Create Unity Package
+</h1>
 
 <p align="center">
   <img src="https://img.shields.io/pypi/dm/create-unity-package">
@@ -29,6 +36,16 @@ Good luck with your development!
 ### How to create a new Unity Package
 
 Run the following command and answer the prompts: `python -m create_unity_package`
+
+By default, this creates a new folder with the unique package
+name entered during the prompts. If you would like to name the
+folder differently, you can change the folder name afterward or
+use the `--output` argument when generating the package. For more
+help use the `--help`.
+
+```
+python -m create_unity_package --output <YourPackageName>
+```
 
 ### How to import and edit package in Unity
 

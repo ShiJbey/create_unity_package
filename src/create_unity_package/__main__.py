@@ -1,4 +1,3 @@
-from pprint import pprint
 import sys
 import os
 from argparse import ArgumentParser, Namespace
@@ -22,6 +21,13 @@ def _parse_command_line_args() -> Namespace:
         action="store_true",
         default=False,
         help="Print the version of CreateUnityPackage"
+    )
+
+    arg_parser.add_argument(
+        "-o", "--output",
+        type=Path,
+        dest="output_path",
+        help="the name of the directory to place the generated package"
     )
 
     return arg_parser.parse_args()
@@ -105,7 +111,10 @@ def main():
 
     package_info = _prompt_user_for_package_info()
 
-    package_dir = Path(os.getcwd()) / package_info.name
+    if args.output_path:
+        package_dir = args.output_path
+    else:
+        package_dir = Path(os.getcwd()) / package_info.name
 
     create_package(package_dir, package_info)
 
