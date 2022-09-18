@@ -23,6 +23,7 @@ This application follows the instructions offered by
 creates new local packages in the directory that the application
 is run.
 
+Please file any issues for bugs or desired features.
 Good luck with your development!
 
 ## Usage
@@ -35,7 +36,7 @@ Good luck with your development!
 
 ### How to create a new Unity Package
 
-Run the following command and answer the prompts: `python -m create_unity_package`
+Run the following command in a terminal and answer the prompts: `create-unity-package`
 
 By default, this creates a new folder with the unique package
 name entered during the prompts. If you would like to name the
@@ -44,7 +45,7 @@ use the `--output` argument when generating the package. For more
 help use the `--help`.
 
 ```
-python -m create_unity_package --output <YourPackageName>
+create-unity-package --output <YourPackageName>
 ```
 
 In your current working directory it will create a new package

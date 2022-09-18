@@ -1,13 +1,14 @@
-import sys
 import os
+import re
+import sys
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
-import re
 
 import inquirer
 
 import create_unity_package
-from create_unity_package.create_unity_package import create_package, PackageInfo, AuthorInfo
+from create_unity_package.create_unity_package import (AuthorInfo, PackageInfo,
+                                                       create_package)
 
 
 def _parse_command_line_args() -> Namespace:
