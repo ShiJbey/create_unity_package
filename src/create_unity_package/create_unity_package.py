@@ -5,12 +5,16 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List
+import logging
+import subprocess
 
 from jinja2 import Environment, FileSystemLoader
 
 _TEMPLATES_DIR = Path(os.path.abspath(__file__)).parent / "templates"
 _FILE_LOADER = FileSystemLoader(_TEMPLATES_DIR)
 _JINJA_ENV = Environment(loader=_FILE_LOADER)
+
+logger = logging.getLogger("create_python_package")
 
 
 @dataclass
@@ -61,6 +65,8 @@ def create_package_json(
     with open(output_path, "w") as f:
         f.writelines(json.dumps(output, indent=4))
 
+    logger.info(f"Created {output_path}")
+
 
 def create_runtime_assembly_def(path: Path, package_info: PackageInfo) -> None:
     package_name_without_ext = ".".join(package_info.name.split('.')[1:])
@@ -83,6 +89,8 @@ def create_runtime_assembly_def(path: Path, package_info: PackageInfo) -> None:
 
     with open(output_path, "w") as f:
         f.writelines(json.dumps(output, indent=4))
+
+    logger.info(f"Created {output_path}")
 
 
 def create_editor_assembly_def(path: Path, package_info: PackageInfo) -> None:
@@ -108,6 +116,8 @@ def create_editor_assembly_def(path: Path, package_info: PackageInfo) -> None:
 
     with open(output_path, "w") as f:
         f.writelines(json.dumps(output, indent=4))
+
+    logger.info(f"Created {output_path}")
 
 
 def create_runtime_tests_assembly_def(path: Path, package_info: PackageInfo) -> None:
@@ -136,6 +146,8 @@ def create_runtime_tests_assembly_def(path: Path, package_info: PackageInfo) -> 
 
     with open(output_path, "w") as f:
         f.writelines(json.dumps(output, indent=4))
+
+    logger.info(f"Created {output_path}")
 
 
 def create_editor_tests_assembly_def(path: Path, package_info: PackageInfo) -> None:
@@ -166,6 +178,8 @@ def create_editor_tests_assembly_def(path: Path, package_info: PackageInfo) -> N
     with open(output_path, "w") as f:
         f.writelines(json.dumps(output, indent=4))
 
+    logger.info(f"Created {output_path}")
+
 
 def create_changelog_markdown(path: Path, package_info: PackageInfo) -> None:
     """Creates a new markdown file with package documentation"""
@@ -175,6 +189,8 @@ def create_changelog_markdown(path: Path, package_info: PackageInfo) -> None:
 
     with open(output_path, 'w') as f:
         f.writelines(output)
+
+    logger.info(f"Created {output_path}")
 
 
 def create_license_markdown(path: Path, package_info: PackageInfo) -> None:
@@ -189,6 +205,8 @@ def create_license_markdown(path: Path, package_info: PackageInfo) -> None:
     with open(output_path, 'w') as f:
         f.writelines(output)
 
+    logger.info(f"Created {output_path}")
+
 
 def create_third_party_notices_markdown(path: Path, package_info: PackageInfo) -> None:
     """Creates a new markdown file with package documentation"""
@@ -196,6 +214,8 @@ def create_third_party_notices_markdown(path: Path, package_info: PackageInfo) -
 
     with open(output_path, 'w') as f:
         f.writelines("")
+
+    logger.info(f"Created {output_path}")
 
 
 def create_documentation_markdown(path: Path, package_info: PackageInfo) -> None:
@@ -208,6 +228,8 @@ def create_documentation_markdown(path: Path, package_info: PackageInfo) -> None
     with open(output_path, 'w') as f:
         f.writelines(output)
 
+    logger.info(f"Created {output_path}")
+
 
 def create_package_readme(path: Path, package_info: PackageInfo) -> None:
     """Create a new README markdown file"""
@@ -218,6 +240,8 @@ def create_package_readme(path: Path, package_info: PackageInfo) -> None:
 
     with open(output_path, 'w') as f:
         f.writelines(output)
+
+    logger.info(f"Created {output_path}")
 
 
 def create_package(package_dir: Path, package_info: PackageInfo) -> None:
@@ -253,3 +277,25 @@ def create_package(package_dir: Path, package_info: PackageInfo) -> None:
     create_documentation_markdown(
         package_dir / "Documentation~",
         package_info)
+
+
+def create_gitignore(path: Path) -> None:
+    """Copy pre-made .gitignore file in package directory"""
+    template = _JINJA_ENV.get_template("gitignore.txt")
+    output = template.render()
+    output_path = path / ".gitignore"
+
+    with open(output_path, 'w') as f:
+        f.writelines(output)
+
+    logger.info(f"Created {output_path}")
+
+
+def initialize_git_repo(path: Path) -> None:
+    """Initialize the directory at the given path using Git"""
+    try:
+        subprocess.run(["git", "init", "-b", "main", "-q"],
+                       cwd=path, check=True)
+        logger.info(f"Initialized Git repo in {path}")
+    except subprocess.CalledProcessError as ex:
+        logger.error(ex)

@@ -3,12 +3,17 @@ import re
 import sys
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
+import logging
 
 import inquirer
 
 import create_unity_package
 from create_unity_package.create_unity_package import (AuthorInfo, PackageInfo,
-                                                       create_package)
+                                                       create_package, create_gitignore,
+                                                       initialize_git_repo)
+
+
+logger = logging.getLogger("create_python_package")
 
 
 def _parse_command_line_args() -> Namespace:
@@ -28,7 +33,21 @@ def _parse_command_line_args() -> Namespace:
         "-o", "--output",
         type=Path,
         dest="output_path",
-        help="the name of the directory to place the generated package"
+        help="The name of the directory to place the generated package"
+    )
+
+    arg_parser.add_argument(
+        "--git",
+        action="store_true",
+        default=False,
+        help="Initialize the package directory as a Git repository (Requires git is installed)"
+    )
+
+    arg_parser.add_argument(
+        "--verbose",
+        action="store_true",
+        default=False,
+        help="Enable logging of application activity to the console"
     )
 
     return arg_parser.parse_args()
@@ -112,12 +131,19 @@ def main():
 
     package_info = _prompt_user_for_package_info()
 
+    if args.verbose:
+        logging.basicConfig(level=logging.INFO, format='%(message)s')
+
     if args.output_path:
         package_dir = args.output_path
     else:
         package_dir = Path(os.getcwd()) / package_info.name
 
     create_package(package_dir, package_info)
+
+    if args.git:
+        create_gitignore(package_dir)
+        initialize_git_repo(package_dir)
 
 
 if __name__ == "__main__":
