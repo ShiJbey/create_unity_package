@@ -52,7 +52,10 @@ create-unity-package --output <YourPackageName>
 ```
 
 In your current working directory it will create a new package
-directory with the name of your package and the following structure.
+directory with the name of your package. The directory structure
+of the package is shown below. Your package will be ready to import
+and configured for editor scripts, runtime scripts like MonoBehaviours,
+and UnityTestRunner tests.
 
 ```
 <root>
@@ -60,6 +63,7 @@ directory with the name of your package and the following structure.
   ├── README.md
   ├── CHANGELOG.md
   ├── LICENSE.md  # Defaults to MIT License
+  ├── .gitignore  # If --git is used
   ├── Third Party Notices.md
   ├── Editor
   │   ├── [company-name].[package-name].Editor.asmdef
